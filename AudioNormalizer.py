@@ -1,3 +1,13 @@
+"""
+TO DO:
+- Try testing for sudden loud to soft and sudden soft to loud (DONE)
+    - Will NOT accommodate for sudden shifts in volume
+- Also implement hearing loss modes
+    - Mild: Loss of 20-40 dB
+    - Moderate: Loss of 41-60 dB
+    - Severe: Loss of 61-80 dB
+"""
+
 #(https://stackoverflow.com/questions/33720395/can-pydub-set-the-maximum-minimum-volume)
 from pydub import AudioSegment
 from pydub.utils import make_chunks
@@ -21,17 +31,25 @@ def chunk_normalize(sample, sample_rate, target_dBFS):
     
     return reduce(lambda x,y: x+y, min_max_volume(target_dBFS[0], target_dBFS[1]))
 
-sample = AudioSegment.from_file('sample_quiet.wav', 'wav')
-normalized_dB = [-32, -18]  #[min_normalized_dB, max_normalized_dB]
+def hearing_impairment(target_dBFS, mode=""):
+    adjustment_factor = 0
+    if mode == "mild":
+        adjustment_factor = 13
+    elif mode == "moderate":
+        adjustment_factor = 18
+    elif mode == "severe":
+        adjustment_factor = 25
+    else:
+        pass
+    
+    for i in range(len(target_dBFS)):
+        target_dBFS[i] += adjustment_factor
+    return target_dBFS
+
+sample = AudioSegment.from_file('./ImperialMarch60.wav', 'wav')
+#Adjust second param accordingly or omit for normal hearing
+normalized_dB = hearing_impairment([-32, -18], "severe")  #[min_normalized_dB, max_normalized_dB]
 sample_rate = 41000
 normalized_sample = chunk_normalize(sample, sample_rate, normalized_dB)
 
-normalized_sample.export('/home/osboxes/Desktop/Programming/Python/Projects/Sound Bound/normalized_sample_quiet.wav', 'wav')
-
-#Generate samples for testing purposes
-"""
-from pydub import AudioSegment
-sample = AudioSegment.from_file('ImperialMarch60.wav', 'wav')
-sample -= 36
-sample.export('sample_quiet.wav', 'wav')
-"""
+normalized_sample.export('./Hearing Impaired Samples/normalized_sample_severe.wav', 'wav')
