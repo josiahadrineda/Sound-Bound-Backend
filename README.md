@@ -1,5 +1,5 @@
 # Sound-Bound-Backend
-<h1>AudioNormalizer.py is the only file you need to pay attention to</h1>
+<h1>AudioNormalizer.py is basically the backbone</h1>
 <br>
 <h2><i>specifically the last function named normalize_audio(audio, mode="")</i></h2>
 <br>
@@ -11,3 +11,7 @@ mode: accommodates for hearing impairment<br>
   - same thing for 'moderate'<br>
   - same thing for 'severe'<br>
 <h2>Return type is an integer representing the percentage increase/decrease from current volume</h2>
+<hr>
+<h2>AdjustVolumeAPI.py is exactly what it sounds like</h2>
+<br>
+index.html inside the templates folder is just a test website to check the responsiveness of the API
