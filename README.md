@@ -1,7 +1,7 @@
 # Sound-Bound-Backend
-<h1>AudioNormalizer.py is basically the backbone</h1>
+<h2>AudioNormalizer.py is basically the backbone</h2>
 <br>
-<h2><i>specifically the last function named normalize_audio(audio, mode="")</i></h2>
+<h3><i>specifically the last function named normalize_audio(audio, mode="")</i></h3>
 <br>
 audio: directory of the audio file to be checked in .wav
 <br>
